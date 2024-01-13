@@ -29,11 +29,10 @@ const Header = () => {
                     </svg>
                 </form>
             </div>
-
             <div>
                 {/* Display search results */}
                 {searchResults.map((result) => (
-                    <div key={result.data.id}>{result.data.title}</div>
+                    <div key={result.data.id}  >{result.data.title}</div>
                 ))}
             </div>
         </>
