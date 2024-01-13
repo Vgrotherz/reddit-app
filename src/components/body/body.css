@@ -1,0 +1,10 @@
+.block {
+    margin: 2rem;
+    margin-right: 25rem;
+    /* border: 1px solid; */
+}
+
+.post {
+    margin: 1rem;
+    border: 1px solid;
+}
