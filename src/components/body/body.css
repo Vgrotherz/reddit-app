@@ -1,12 +1,15 @@
 .block {
     margin: 2rem;
-    margin-right: 25rem;
+    /* margin-right: 25rem; */
     /* border: 1px solid; */
 }
 
 .post {
     margin: 1rem;
-    border: 1px solid;
+    padding: 0.5rem 1rem;
+    /* border: 1px solid; */
+    box-shadow: 4px 6px 16px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 19px;
 }
 
 .img {
