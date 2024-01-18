@@ -8,3 +8,7 @@
     margin: 1rem;
     border: 1px solid;
 }
+
+.img {
+    max-width: 50%;
+}
