@@ -3,6 +3,7 @@ import RedditApi from './components/redditApi/RedditApi';
 import Header from './components/header/Header';
 import Body from './components/body/Body';
 import WeatherComponent from './components/weatherApi/WeatherComponent';
+import ButtonsAside from './components/buttonsAside/ButtonsAside';
 
 import './App.css';
 
@@ -22,8 +23,12 @@ function App() {
   return (
     <div>
       <Header onSearch={handleSearch} />
-      <Body searchResults={searchResults} />
-      {/* <WeatherComponent /> */}
+      <div className='main'>
+        <Body searchResults={searchResults} />
+        {/* <WeatherComponent /> */}
+        <ButtonsAside />
+      </div>
+      
     </div>
   );
 }
