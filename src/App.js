@@ -23,7 +23,7 @@ function App() {
   return (
     <div>
       <Header onSearch={handleSearch} />
-      <div className='main'>
+      <div className='main block'>
         <Body searchResults={searchResults} />
         {/* <WeatherComponent /> */}
         <ButtonsAside />

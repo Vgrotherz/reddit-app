@@ -4,13 +4,13 @@ import './body.css';
 
 const Body = ({ searchResults }) => {
     return(
-        <div className="block">
+        <div className="test">
             {searchResults.map((result) => {
                 const { id, title, url, thumbnail, author, preview } = result.data;
                 // const imageUrl = preview.images[0].resolutions[0].url;
                 console.log(result.data)
                 return (
-                    <>
+                    <div >
                         <div key={id} className="post">
                             <h3>{title}</h3>
                             {/* <img src={thumbnail}></img> */}
@@ -21,7 +21,7 @@ const Body = ({ searchResults }) => {
                                 {url}
                             </a> */}
                         </div>
-                    </>
+                    </div>
                 );
             })}
         </div>

@@ -1,0 +1,26 @@
+.aside_block {
+    display: flex;
+    flex-direction: column;
+}
+
+.aside_block button {
+    display: flex;
+    align-items: center;
+    margin: 1rem;
+    background: none;
+	/* color: inherit; */
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	/* outline: inherit; */
+    width: 14rem;
+}
+
+.aside_block svg {
+    margin-right: 1rem;
+}
+
+.aside_block button:hover {
+    background: rgba(119, 119, 119, 0.377);
+}
