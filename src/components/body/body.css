@@ -6,7 +6,7 @@
 
 .post {
     margin: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 1.5rem 2rem;
     /* border: 1px solid; */
     box-shadow: 4px 6px 16px 2px rgba(0, 0, 0, 0.25);
     border-radius: 19px;
@@ -16,6 +16,6 @@
     max-width: 50%;
 }
 
-.test {
-    /* width: 1rem; */
+.search_results {
+    width: 80%;
 }

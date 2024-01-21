@@ -4,7 +4,7 @@ import './body.css';
 
 const Body = ({ searchResults }) => {
     return(
-        <div className="test">
+        <div className="search_results">
             {searchResults.map((result) => {
                 const { id, title, url, thumbnail, author, preview } = result.data;
                 // const imageUrl = preview.images[0].resolutions[0].url;
