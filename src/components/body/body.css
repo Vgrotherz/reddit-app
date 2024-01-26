@@ -12,10 +12,26 @@
     border-radius: 19px;
 }
 
+.post h3 {
+    margin-bottom: 1rem;
+}
+
+.post p {
+    margin: 1rem 0;
+}
+
+.link_flair_text {
+    display: table;
+    padding: 5px;
+    border-radius: 12px;
+    background-color: rgb(161 211 225);
+}
+
 .img {
-    max-width: 50%;
+    width: 60%;
 }
 
 .search_results {
     width: 80%;
 }
+

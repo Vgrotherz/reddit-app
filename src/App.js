@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RedditApi from './components/redditApi/RedditApi';
 import Header from './components/header/Header';
 import Body from './components/body/Body';
-import WeatherComponent from './components/weatherApi/WeatherComponent';
+// import WeatherComponent from './components/weatherApi/WeatherComponent';
 import ButtonsAside from './components/buttonsAside/ButtonsAside';
 
 import './reset.css';
