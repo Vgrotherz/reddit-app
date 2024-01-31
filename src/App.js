@@ -16,7 +16,9 @@ function App() {
   const handleSearch = async (searchTerm) => {
     const results = await RedditApi(searchTerm);
     setSearchResults(results);
-  }
+    
+    }
+  
 
   // ex of old way to handle search functions
   // const handleGamingSearch = async (searchTerm) => {
@@ -39,7 +41,15 @@ function App() {
     <div>
       <Header onSearch={handleSearch} />
       <div className='main block'>
-        <Body searchResults={searchResults} />
+        { searchResults.length > 0? 
+          (
+            <Body searchResults={searchResults} />
+          ) : (
+            <div>
+              <h1>Type anything</h1>
+            </div>
+          )
+        }
         {/* <WeatherComponent /> */}
         <ButtonsAside 
           onNewsSearch={() => handleSearch('Fresh News')}

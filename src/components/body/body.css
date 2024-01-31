@@ -1,22 +1,42 @@
 .block {
     margin: 2rem;
-    /* margin-right: 25rem; */
-    /* border: 1px solid; */
 }
 
 .post {
+    display: flex;
     margin: 1rem;
     padding: 1.5rem 2rem;
-    /* border: 1px solid; */
+    
     box-shadow: 4px 6px 16px 2px rgba(0, 0, 0, 0.25);
     border-radius: 19px;
+}
+
+.btn_block {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.icon_action {
+    font-size: 1.5rem;
+}
+
+.icon_action_btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    border-radius: var(--radius);
 }
 
 .post h3 {
     margin-bottom: 1rem;
 }
 
-.post p {
+.pic_block p {
     margin: 1rem 0;
 }
 
@@ -32,6 +52,6 @@
 }
 
 .search_results {
-    width: 80%;
+    /* width: 80%; */
 }
 
