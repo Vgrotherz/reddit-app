@@ -10,12 +10,15 @@ import './App.css';
 
 function App() {
   const [ searchResults, setSearchResults ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(false);
   const defaultSearch = 'Fresh news';
 
 
   const handleSearch = async (searchTerm) => {
+    setIsLoading(true); // Set loading to true before fetching
     const results = await RedditApi(searchTerm);
     setSearchResults(results);
+    setIsLoading(false); // Set loading to false after fetching
     
     }
   
@@ -43,7 +46,7 @@ function App() {
       <div className='main block'>
         { searchResults.length > 0? 
           (
-            <Body searchResults={searchResults} />
+            <Body searchResults={searchResults} isLoading={isLoading}/>
           ) : (
             <div>
               <h1>Type anything</h1>
@@ -52,6 +55,7 @@ function App() {
         }
         {/* <WeatherComponent /> */}
         <ButtonsAside 
+          searchResults={searchResults}
           onNewsSearch={() => handleSearch('Fresh News')}
           onGamingSearch={() => handleSearch('Gaming')}
           onSportsSearch={() => handleSearch('Sports')}

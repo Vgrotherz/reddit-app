@@ -7,4 +7,9 @@
 .main h1 {
     display: flex;
     justify-content: center;
+    margin: 6rem 2rem 2rem 2rem;
+}
+
+.width60 {
+    width: 60%;
 }
