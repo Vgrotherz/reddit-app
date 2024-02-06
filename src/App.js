@@ -53,7 +53,6 @@ function App() {
             </div>
           )
         }
-        {/* <WeatherComponent /> */}
         <ButtonsAside 
           searchResults={searchResults}
           onNewsSearch={() => handleSearch('Fresh News')}
