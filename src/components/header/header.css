@@ -38,11 +38,11 @@
     margin: 0 10rem 0 1rem;
     display: flex;
     align-items: center;
-    cursor: pointer;
 }
 
 .logo svg {
     font-size: 2rem;
+    cursor: pointer;
 }
 
 .logo p {

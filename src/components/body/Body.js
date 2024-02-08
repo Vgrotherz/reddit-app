@@ -1,8 +1,11 @@
-import React from "react";
-
+import React, { useState } from "react";
 import './body.css';
 
+import ScoreBlock from "../scoreBlock/ScoreBlock";
+
 const Body = ({ searchResults, isLoading }) => {
+    // const [ showFullText, setShowFullText ] = useState(false);
+    const [results, setResults] = useState(searchResults);
 
     // converts seconds to different more readable date
     const timeSince = (date) => {
@@ -41,19 +44,33 @@ const Body = ({ searchResults, isLoading }) => {
     // Sort searchResults by created time in descending order
     const sortedResults = searchResults.sort((a, b) => b.data.created - a.data.created);
 
+    const handleShowText = (index) => {
+        const updatedResults = [...sortedResults];
+        updatedResults[index].showFullText = !updatedResults[index].showFullText;
+        setResults(updatedResults);
+    }
+
     return(
         <div className="search_results">
             {/* results like it will be on Reddit - replace it on 47 = {searchResults.map((result) => { */}
-            {sortedResults.map((result) => {
-                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, subreddit } = result.data;
+            {sortedResults.map((result, index) => {
+                const { id, title, url, thumbnail, selftext_html, media, media_metadata, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, subreddit } = result.data;
 
+                console.log(result.data) //shows all json data from search
                 // Check if media exists and if it's a video
                 const isVideo = media && media.reddit_video;
                 const isGifv = url.endsWith(".gifv");
+                
+                // попытка получить картинку для сторонних сайтов - данные с media_metadata и отображение на 148 строке
+                // let dynamicUrl = null;
+                // if (media_metadata && Object.keys(media_metadata).length > 0) {
+                //     const dynamicKey = Object.keys(media_metadata)[0]; // Assuming there is only one key
+                //     dynamicUrl = media_metadata[dynamicKey].s.u;
+                // }
 
                 // isImge to controls what to render in a post
                 const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".gif") || url.endsWith(".gifv");
-                console.log(result.data)
+               
 
                 // redditDate - epoch data from json. daysCreated - convert to human readable date - these 2 func is a whole date info of a post date
                 // const redditDate = new Date(created *1000);
@@ -66,6 +83,10 @@ const Body = ({ searchResults, isLoading }) => {
                     txt.innerHTML = html;
                     return txt.value;
                 }
+
+                // logic for show more button
+                const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
+                const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
 
                 return (
                     <div>
@@ -81,16 +102,8 @@ const Body = ({ searchResults, isLoading }) => {
                                     </div>
                                 </div>
                             ) : (
-                                <>
-                                    <div className="btn_block">
-                                        <button className="icon_action_btn">
-                                            <svg className="icon_action" stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24"  height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 21c-1.654 0-3-1.346-3-3v-4.764c-1.143 1.024-3.025.979-4.121-.115-1.17-1.169-1.17-3.073 0-4.242l7.121-7.121 7.121 7.121c1.17 1.169 1.17 3.073 0 4.242-1.094 1.095-2.979 1.14-4.121.115v4.764c0 1.654-1.346 3-3 3zm-1-12.586v9.586c0 .551.448 1 1 1s1-.449 1-1v-9.586l3.293 3.293c.379.378 1.035.378 1.414 0 .391-.391.391-1.023 0-1.414l-5.707-5.707-5.707 5.707c-.391.391-.391 1.023 0 1.414.379.378 1.035.378 1.414 0l3.293-3.293z"></path></svg>
-                                        </button>
-                                            <span className="score">{scoreK(score)}</span>
-                                        <button className="icon_action_btn">
-                                            <svg className="icon_action" stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.312l-7.121-7.121c-1.17-1.17-1.17-3.073 0-4.242 1.094-1.094 2.978-1.138 4.121-.115v-4.834c0-1.654 1.346-3 3-3s3 1.346 3 3v4.834c1.143-1.023 3.027-.979 4.121.115 1.17 1.169 1.17 3.072 0 4.242l-7.121 7.121zm-5-10.242c-.268 0-.518.104-.707.293-.391.39-.391 1.023 0 1.414l5.707 5.707 5.707-5.707c.391-.391.391-1.024 0-1.414-.379-.379-1.035-.379-1.414 0l-3.293 3.293v-9.656c0-.551-.448-1-1-1s-1 .449-1 1v9.656l-3.293-3.293c-.189-.189-.439-.293-.707-.293z"></path></svg>
-                                        </button>
-                                    </div>
+                                <> 
+                                    <ScoreBlock score={score}/>
                                     <div className="pic_block">
                                         <div>
                                             <div id="name_days">
@@ -104,25 +117,42 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <h2>{title}</h2>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
+                                        <>
                                         { isGifv?  ( 
                                             <video className="width60" autoPlay loop>
                                                 <source src={url.replace('.gifv', '.mp4')} type="video/mp4" />
                                                 Your browser does not support the video tag.
-                                            </video>
-                                            
+                                            </video>    
                                             ) : thumbnail && isVideo? (
                                                 <video className="video" controls autoPlay loop>
                                                     <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
                                                 </video>
                                             ) : isImage? (
-                                                <img className="img" src={url} alt={title} />
-                                                
+                                                <img className="img" src={url} alt={title} />                                    
                                             ) : thumbnail && thumbnail === 'self'? (
-                                                <div dangerouslySetInnerHTML={{ __html: decodeHtml(selftext_html)}}></div>
+                                                <div className="post_text">
+                                                    <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                                                    {decodeHtml(selftext_html).length > 1400 && (
+                                                        <button onClick={() => handleShowText(index)}>
+                                                            {result.showFullText ? 'Show less' : 'Show more'}
+                                                        </button>
+                                                    )}
+                                                </div>      
                                             ) : thumbnail? (
-                                                <img src={thumbnail}></img>
+                                                <div>
+                                                    <img src={thumbnail} alt={title}></img>
+                                                    {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
+                                                    : null} */}
+                                                    <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                                                    {decodeHtml(selftext_html).length > 1400 && (
+                                                        <button onClick={() => handleShowText(index)}>
+                                                            {result.showFullText ? 'Show less' : 'Show more'}
+                                                        </button>
+                                                    )}
+                                                </div>
                                             ) : null
                                         }
+                                        </>
                                         <br></br>
                                         <div className="comment_block">
                                             <button className="icon_action_btn">

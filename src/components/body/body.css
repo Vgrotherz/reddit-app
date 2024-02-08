@@ -43,7 +43,7 @@
 }
 
 .pic_block {
-  width: 70%;
+  width: 100%;
 }
 
 .pic_block p {
@@ -97,6 +97,10 @@
 .search_results {
     /* width: 80%; */
     margin: 6rem 2rem 2rem 2rem;
+}
+
+.md {
+  line-height: 1.5;
 }
 
 .comment_block {
