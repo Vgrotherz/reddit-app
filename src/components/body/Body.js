@@ -4,7 +4,6 @@ import './body.css';
 import ScoreBlock from "../scoreBlock/ScoreBlock";
 
 const Body = ({ searchResults, isLoading }) => {
-    // const [ showFullText, setShowFullText ] = useState(false);
     const [results, setResults] = useState(searchResults);
 
     // converts seconds to different more readable date
@@ -44,6 +43,7 @@ const Body = ({ searchResults, isLoading }) => {
     // Sort searchResults by created time in descending order
     const sortedResults = searchResults.sort((a, b) => b.data.created - a.data.created);
 
+    // funciton for handle showmore button 
     const handleShowText = (index) => {
         const updatedResults = [...sortedResults];
         updatedResults[index].showFullText = !updatedResults[index].showFullText;
@@ -117,42 +117,43 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <h2>{title}</h2>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
-                                        <>
-                                        { isGifv?  ( 
-                                            <video className="width60" autoPlay loop>
-                                                <source src={url.replace('.gifv', '.mp4')} type="video/mp4" />
-                                                Your browser does not support the video tag.
-                                            </video>    
-                                            ) : thumbnail && isVideo? (
-                                                <video className="video" controls autoPlay loop>
-                                                    <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
-                                                </video>
-                                            ) : isImage? (
-                                                <img className="img" src={url} alt={title} />                                    
-                                            ) : thumbnail && thumbnail === 'self'? (
-                                                <div className="post_text">
-                                                    <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
-                                                    {decodeHtml(selftext_html).length > 1400 && (
-                                                        <button onClick={() => handleShowText(index)}>
-                                                            {result.showFullText ? 'Show less' : 'Show more'}
-                                                        </button>
-                                                    )}
-                                                </div>      
-                                            ) : thumbnail? (
-                                                <div>
-                                                    <img src={thumbnail} alt={title}></img>
-                                                    {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
-                                                    : null} */}
-                                                    <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
-                                                    {decodeHtml(selftext_html).length > 1400 && (
-                                                        <button onClick={() => handleShowText(index)}>
-                                                            {result.showFullText ? 'Show less' : 'Show more'}
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            ) : null
-                                        }
-                                        </>
+                                        {/* check what to render next gif/video/text etc */}
+                                        <div className="media_choose">
+                                            { isGifv?  ( 
+                                                <video className="width60" autoPlay loop>
+                                                    <source src={url.replace('.gifv', '.mp4')} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                </video>    
+                                                ) : thumbnail && isVideo? (
+                                                    <video className="video" controls autoPlay loop>
+                                                        <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
+                                                    </video>
+                                                ) : isImage? (
+                                                    <img className="img" src={url} alt={title} />                                    
+                                                ) : thumbnail && thumbnail === 'self'? (
+                                                    <div className="post_text">
+                                                        <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                                                        {decodeHtml(selftext_html).length > 1400 && (
+                                                            <button onClick={() => handleShowText(index)}>
+                                                                {result.showFullText ? 'Show less' : 'Show more'}
+                                                            </button>
+                                                        )}
+                                                    </div>      
+                                                ) : thumbnail? (
+                                                    <div>
+                                                        <img src={thumbnail} alt={title}></img>
+                                                        {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
+                                                        : null} */}
+                                                        <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                                                        {decodeHtml(selftext_html).length > 1400 && (
+                                                            <button onClick={() => handleShowText(index)}>
+                                                                {result.showFullText ? 'Show less' : 'Show more'}
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                ) : null
+                                            }
+                                        </div>
                                         <br></br>
                                         <div className="comment_block">
                                             <button className="icon_action_btn">

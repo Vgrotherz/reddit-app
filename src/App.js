@@ -5,6 +5,8 @@ import Body from './components/body/Body';
 // import WeatherComponent from './components/weatherApi/WeatherComponent';
 import ButtonsAside from './components/buttonsAside/ButtonsAside';
 
+import RedditComments from './components/redditApi/RedditComments';
+
 import './reset.css';
 import './App.css';
 
@@ -43,7 +45,7 @@ function App() {
   return (
     <div>
       <Header onSearch={handleSearch} />
-      <div className='main block'>
+      {/* <div className='main block'>
         { searchResults.length > 0? 
           (
             <Body searchResults={searchResults} isLoading={isLoading}/>
@@ -66,7 +68,8 @@ function App() {
           // onGamingSearch={handleGamingSearch}
           // onSportsSearch={handleSportsSearch}
           />
-      </div>
+      </div> */}
+      <RedditComments />
       
     </div>
   );

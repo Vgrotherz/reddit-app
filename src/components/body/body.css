@@ -1,3 +1,7 @@
+a {
+  display: inline-block;
+}
+
 .post {
     display: flex;
     margin: 1rem;
@@ -99,6 +103,7 @@
     margin: 6rem 2rem 2rem 2rem;
 }
 
+/* this class loads from reddit objects */
 .md {
   line-height: 1.5;
 }
