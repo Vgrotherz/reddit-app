@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './body.css';
 
 import ScoreBlock from "../scoreBlock/ScoreBlock";
@@ -6,7 +6,7 @@ import Comments from "../redditApi/Comments";
 // import fetchRedditComments from "../redditApi/RedditComments";
 
 const Body = ({ searchResults, isLoading }) => {
-    const [results, setResults] = useState(searchResults);
+    // const [results, setResults] = useState(searchResults);
 
     // converts seconds to different more readable date
     const timeSince = (date) => {
@@ -42,14 +42,14 @@ const Body = ({ searchResults, isLoading }) => {
     const handleShowText = (index) => {
         const updatedResults = [...sortedResults];
         updatedResults[index].showFullText = !updatedResults[index].showFullText;
-        setResults(updatedResults);
+        // setResults(updatedResults);
     }
     
     return(
         <div className="search_results">
             {/* results like it will be on Reddit - replace it on 47 = {searchResults.map((result) => { */}
             {sortedResults.map((result, index) => {
-                const { id, title, url, thumbnail, selftext_html, media, media_metadata, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, subreddit_ } = result.data;
+                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, } = result.data;
 
                 console.log(result.data) //shows all json data from search
                 // Check if media exists and if it's a video
