@@ -5,12 +5,12 @@ import Body from './components/body/Body';
 // import WeatherComponent from './components/weatherApi/WeatherComponent';
 import ButtonsAside from './components/buttonsAside/ButtonsAside';
 
-import RedditComments from './components/redditApi/RedditComments';
+// import Comments from './components/comments/Comments';
 
 import './reset.css';
 import './App.css';
 
-function App() {
+const App = () => {
   const [ searchResults, setSearchResults ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(false);
   const defaultSearch = 'Fresh news';
@@ -45,7 +45,7 @@ function App() {
   return (
     <div>
       <Header onSearch={handleSearch} />
-      {/* <div className='main block'>
+      <div className='main block'>
         { searchResults.length > 0? 
           (
             <Body searchResults={searchResults} isLoading={isLoading}/>
@@ -68,9 +68,7 @@ function App() {
           // onGamingSearch={handleGamingSearch}
           // onSportsSearch={handleSportsSearch}
           />
-      </div> */}
-      <RedditComments />
-      
+      </div>
     </div>
   );
 }

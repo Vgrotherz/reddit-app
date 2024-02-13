@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
-
-const RedditComments = () => {
-  const [comments, setComments] = useState([]);
-
-  useEffect(() => {
-    const fetchComments = async () => {
+    const fetchRedditComments = async (postId, subredditName, titleName) => {
       try {
         
-        const response = await fetch('https://www.reddit.com/r/HitmanAslume/comments/1algs6e/i_fucking_love_kane_lynch_rahhhhh/.json');
+        const response = await fetch(`https://www.reddit.com/${subredditName}/comments/${postId}/${titleName}.json`);
 
+        
         if (!response.ok) {
           throw new Error('Failed to fetch comments');
         }
@@ -23,27 +18,12 @@ const RedditComments = () => {
           score: comment.data.score,
         }));
 
-        setComments(commentsData);
+        return commentsData;
       } catch (error) {
         console.error('Error fetching comments:', error);
+        return [];
       }
     };
 
-    fetchComments();
-  }, []);
 
-  return (
-    <div>
-      <h1>Reddit Comments</h1>
-      <ul>
-        {comments.map((comment, index) => (
-          <li key={index}>
-            <strong>{comment.author}</strong>: {comment.body} (Score: {comment.score})
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default RedditComments;
+export default fetchRedditComments;

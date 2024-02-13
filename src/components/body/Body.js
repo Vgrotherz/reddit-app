@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import './body.css';
 
 import ScoreBlock from "../scoreBlock/ScoreBlock";
+import Comments from "../redditApi/Comments";
+// import fetchRedditComments from "../redditApi/RedditComments";
 
 const Body = ({ searchResults, isLoading }) => {
     const [results, setResults] = useState(searchResults);
@@ -32,13 +34,6 @@ const Body = ({ searchResults, isLoading }) => {
         }
         return Math.floor(seconds) + " seconds ago";
     }
-
-    const scoreK = (score) => {
-        if(score >= 1000) {
-            return `${(score / 1000).toFixed(1)}k`; // Converts and appends 'k' for thousands
-        }
-        return score;  // Returns the original score if less than 1000
-    }
     
     // Sort searchResults by created time in descending order
     const sortedResults = searchResults.sort((a, b) => b.data.created - a.data.created);
@@ -49,19 +44,19 @@ const Body = ({ searchResults, isLoading }) => {
         updatedResults[index].showFullText = !updatedResults[index].showFullText;
         setResults(updatedResults);
     }
-
+    
     return(
         <div className="search_results">
             {/* results like it will be on Reddit - replace it on 47 = {searchResults.map((result) => { */}
             {sortedResults.map((result, index) => {
-                const { id, title, url, thumbnail, selftext_html, media, media_metadata, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, subreddit } = result.data;
+                const { id, title, url, thumbnail, selftext_html, media, media_metadata, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, subreddit_ } = result.data;
 
                 console.log(result.data) //shows all json data from search
                 // Check if media exists and if it's a video
                 const isVideo = media && media.reddit_video;
                 const isGifv = url.endsWith(".gifv");
-                
-                // попытка получить картинку для сторонних сайтов - данные с media_metadata и отображение на 148 строке
+
+                // попытка получить картинку для сторонних сайтов - данные с media_metadata и отображение на 138 строке
                 // let dynamicUrl = null;
                 // if (media_metadata && Object.keys(media_metadata).length > 0) {
                 //     const dynamicKey = Object.keys(media_metadata)[0]; // Assuming there is only one key
@@ -87,6 +82,14 @@ const Body = ({ searchResults, isLoading }) => {
                 // logic for show more button
                 const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
                 const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
+
+                // const handleCommentsClick = async () => {
+                //     // Call fetchRedditComments with postId and subreddit_name_prefixed
+                //     const commentsData = await fetchRedditComments(id, subreddit_name_prefixed, title);
+                
+                //     // Handle commentsData as needed, e.g., update state, display comments, etc.
+                //     console.log('Comments data:', commentsData);
+                //   };
 
                 return (
                     <div>
@@ -156,10 +159,11 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <br></br>
                                         <div className="comment_block">
-                                            <button className="icon_action_btn">
+                                            {/* <button className="icon_action_btn" onClick={handleCommentsClick}>
                                                <svg className="icon_action" stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path></svg>
                                                 <span id="comments_num">{num_comments}</span>
-                                            </button>
+                                            </button> */}
+                                            <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments}/>
                                         </div>
                                         {/* <img>{likes}</img> */}
                                         {/* this is a link to a reddit for testing*/}
