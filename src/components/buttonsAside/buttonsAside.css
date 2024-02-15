@@ -1,3 +1,7 @@
+.aside {
+    width: 100%;
+}
+
 .aside_block {
     display: flex;
     flex-direction: column;
@@ -6,7 +10,7 @@
     margin: 1rem;
     margin-top: 7rem;
     padding: 1rem;
-    position: fixed;
+    /* position: fixed; */
 }
 
 .aside_block button {

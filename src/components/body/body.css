@@ -2,6 +2,11 @@ a {
   display: inline-block;
 }
 
+.search_results {
+  /* width: 80%; */
+  margin: 6rem 2rem 2rem 2rem;
+}
+
 .post {
     display: flex;
     margin: 1rem;
@@ -83,38 +88,6 @@ a {
     background-color: rgb(161 211 225);
     margin: 6px 0;
     font-size: smaller;
-}
-
-.img {
-    width: 60%;
-    margin: 1rem 0;
-}
-
-.gifv {
-  width: 60%;
-}
-
-.video {
-  width: 60%;
-}
-
-.search_results {
-    /* width: 80%; */
-    margin: 6rem 2rem 2rem 2rem;
-}
-
-/* this class loads from reddit objects */
-.md {
-  line-height: 1.5;
-}
-
-.comment_block {
-    margin: 1rem 0;
-    border-top: 1px solid #00000036;
-}
-
-#comments_num {
-    opacity: 1;
 }
 
 /* loading logic */

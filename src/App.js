@@ -45,7 +45,8 @@ const App = () => {
   return (
     <div>
       <Header onSearch={handleSearch} />
-      <div className='main block'>
+      <div className='flex'>
+        <div className='main block'>
         { searchResults.length > 0? 
           (
             <Body searchResults={searchResults} isLoading={isLoading}/>
@@ -55,6 +56,8 @@ const App = () => {
             </div>
           )
         }
+        
+        </div>
         <ButtonsAside 
           searchResults={searchResults}
           onNewsSearch={() => handleSearch('Fresh News')}
@@ -67,7 +70,7 @@ const App = () => {
           // old way
           // onGamingSearch={handleGamingSearch}
           // onSportsSearch={handleSportsSearch}
-          />
+        />
       </div>
     </div>
   );

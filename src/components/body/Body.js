@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import './body.css';
 
 import ScoreBlock from "../scoreBlock/ScoreBlock";
-import Comments from "../redditApi/Comments";
+import Comments from "../comments/Comments";
+import Media from "../media/Media";
 // import fetchRedditComments from "../redditApi/RedditComments";
 
 const Body = ({ searchResults, isLoading }) => {
-    const [results, setResults] = useState(searchResults);
 
     // converts seconds to different more readable date
     const timeSince = (date) => {
@@ -38,18 +38,11 @@ const Body = ({ searchResults, isLoading }) => {
     // Sort searchResults by created time in descending order
     const sortedResults = searchResults.sort((a, b) => b.data.created - a.data.created);
 
-    // funciton for handle showmore button 
-    const handleShowText = (index) => {
-        const updatedResults = [...sortedResults];
-        updatedResults[index].showFullText = !updatedResults[index].showFullText;
-        setResults(updatedResults);
-    }
-    
     return(
         <div className="search_results">
             {/* results like it will be on Reddit - replace it on 47 = {searchResults.map((result) => { */}
             {sortedResults.map((result, index) => {
-                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, } = result.data;
+                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, spoiler } = result.data;
 
                 console.log(result.data) //shows all json data from search
                 // Check if media exists and if it's a video
@@ -73,26 +66,9 @@ const Body = ({ searchResults, isLoading }) => {
 
                 const daysCreated = timeSince(new Date(created * 1000));
                 
-                const decodeHtml= (html) => {
-                    let txt = document.createElement("textarea");
-                    txt.innerHTML = html;
-                    return txt.value;
-                }
-
-                // logic for show more button
-                const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
-                const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
-
-                // const handleCommentsClick = async () => {
-                //     // Call fetchRedditComments with postId and subreddit_name_prefixed
-                //     const commentsData = await fetchRedditComments(id, subreddit_name_prefixed, title);
-                
-                //     // Handle commentsData as needed, e.g., update state, display comments, etc.
-                //     console.log('Comments data:', commentsData);
-                //   };
 
                 return (
-                    <div>
+                    <div className="res">
                         <div key={id} className={isLoading? 'post center_flex' : 'post' }>
                             { isLoading? (
                                 <div className="loading">
@@ -120,56 +96,16 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <h2>{title}</h2>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
-                                        {/* check what to render next gif/video/text etc */}
-                                        <div className="media_choose">
-                                            { isGifv?  ( 
-                                                <video className="width60" autoPlay loop>
-                                                    <source src={url.replace('.gifv', '.mp4')} type="video/mp4" />
-                                                    Your browser does not support the video tag.
-                                                </video>    
-                                                ) : thumbnail && isVideo? (
-                                                    <video className="video" controls autoPlay loop>
-                                                        <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
-                                                    </video>
-                                                ) : isImage? (
-                                                    <img className="img" src={url} alt={title} />                                    
-                                                ) : thumbnail && thumbnail === 'self'? (
-                                                    <div className="post_text">
-                                                        <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
-                                                        {decodeHtml(selftext_html).length > 1400 && (
-                                                            <button onClick={() => handleShowText(index)}>
-                                                                {result.showFullText ? 'Show less' : 'Show more'}
-                                                            </button>
-                                                        )}
-                                                    </div>      
-                                                ) : thumbnail? (
-                                                    <div>
-                                                        <img src={thumbnail} alt={title}></img>
-                                                        {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
-                                                        : null} */}
-                                                        <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
-                                                        {decodeHtml(selftext_html).length > 1400 && (
-                                                            <button onClick={() => handleShowText(index)}>
-                                                                {result.showFullText ? 'Show less' : 'Show more'}
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                ) : null
-                                            }
-                                        </div>
+                                        <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} />
                                         <br></br>
                                         <div className="comment_block">
-                                            {/* <button className="icon_action_btn" onClick={handleCommentsClick}>
-                                               <svg className="icon_action" stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path></svg>
-                                                <span id="comments_num">{num_comments}</span>
-                                            </button> */}
                                             <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments}/>
                                         </div>
                                         {/* <img>{likes}</img> */}
                                         {/* this is a link to a reddit for testing*/}
-                                        <a href={url} target="_blank" rel="noopener noreferrer">
+                                        {/* <a href={url} target="_blank" rel="noopener noreferrer">
                                             {url}
-                                        </a>
+                                        </a> */}
                                     </div>
                                 </>
                             )}

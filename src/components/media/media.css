@@ -1,0 +1,33 @@
+.res {
+    /* width: 100%; */
+}
+
+.img {
+    width: 60%;
+    margin: 1rem 0;
+}
+
+.gifv {
+  width: 60%;
+}
+
+.video {
+  width: 60%;
+}
+
+.spoiler {
+    cursor: pointer;
+}
+
+.media_choose {
+    /* width: 60%; */
+}
+
+.width_100 {
+    max-width: 100%;
+}
+
+/* this class loads from reddit objects */
+.md {
+  line-height: 1.5;
+}

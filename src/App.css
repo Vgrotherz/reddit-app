@@ -13,3 +13,7 @@
 .width60 {
     width: 60%;
 }
+
+.flex {
+    display: flex;
+}
