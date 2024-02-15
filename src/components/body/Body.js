@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './body.css';
 
 import ScoreBlock from "../scoreBlock/ScoreBlock";
@@ -6,7 +6,7 @@ import Comments from "../redditApi/Comments";
 // import fetchRedditComments from "../redditApi/RedditComments";
 
 const Body = ({ searchResults, isLoading }) => {
-    // const [results, setResults] = useState(searchResults);
+    const [results, setResults] = useState(searchResults);
 
     // converts seconds to different more readable date
     const timeSince = (date) => {
@@ -42,7 +42,7 @@ const Body = ({ searchResults, isLoading }) => {
     const handleShowText = (index) => {
         const updatedResults = [...sortedResults];
         updatedResults[index].showFullText = !updatedResults[index].showFullText;
-        // setResults(updatedResults);
+        setResults(updatedResults);
     }
     
     return(
