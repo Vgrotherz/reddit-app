@@ -20,11 +20,7 @@
 }
 
 .media_choose {
-    /* width: 60%; */
-}
-
-.width_100 {
-    max-width: 100%;
+    margin: 1rem 0;
 }
 
 /* this class loads from reddit objects */

@@ -6,34 +6,36 @@ import Comments from "../comments/Comments";
 import Media from "../media/Media";
 // import fetchRedditComments from "../redditApi/RedditComments";
 
+export const timeSince = (date) => {
+    const seconds = Math.floor((new Date() - date) / 1000);
+    let interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+        return interval + " years ago";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months ago";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days ago";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours ago";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes ago";
+    }
+    return Math.floor(seconds) + " seconds ago";
+}
+
 const Body = ({ searchResults, isLoading }) => {
 
     // converts seconds to different more readable date
-    const timeSince = (date) => {
-        const seconds = Math.floor((new Date() - date) / 1000);
-        let interval = Math.floor(seconds / 31536000);
-
-        if (interval > 1) {
-            return interval + " years ago";
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval > 1) {
-            return interval + " months ago";
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval > 1) {
-            return interval + " days ago";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval > 1) {
-            return interval + " hours ago";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval > 1) {
-            return interval + " minutes ago";
-        }
-        return Math.floor(seconds) + " seconds ago";
-    }
+    
     
     // Sort searchResults by created time in descending order
     const sortedResults = searchResults.sort((a, b) => b.data.created - a.data.created);
@@ -84,7 +86,7 @@ const Body = ({ searchResults, isLoading }) => {
                                 <> 
                                     <ScoreBlock score={score}/>
                                     <div className="pic_block">
-                                        <div>
+                                        <div className="width_100">
                                             <div id="name_days">
                                                 <p className="subreddit_name">{subreddit_name_prefixed}</p>
                                                 <span>•</span>
@@ -99,7 +101,7 @@ const Body = ({ searchResults, isLoading }) => {
                                         <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} />
                                         <br></br>
                                         <div className="comment_block">
-                                            <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments}/>
+                                            <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments} />
                                         </div>
                                         {/* <img>{likes}</img> */}
                                         {/* this is a link to a reddit for testing*/}

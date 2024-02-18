@@ -43,11 +43,11 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
                     //         // <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
                     // ) 
                     : thumbnail && isVideo? (
-                        <video className="width_100" controls autoPlay loop>
+                        <video className="width_50" controls autoPlay loop>
                             <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
                         </video>
                     ) : isImage? (
-                        <img className="width_100" src={url} alt={title} />                                    
+                        <img className="width_50" src={url} alt={title} />                                    
                     ) : thumbnail && thumbnail === 'self'? (
                         <div className="post_text">
                             <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
