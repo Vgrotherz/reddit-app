@@ -1,3 +1,4 @@
+// spoilersSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const spoilersSlice = createSlice({
@@ -6,12 +7,12 @@ const spoilersSlice = createSlice({
     spoiler: false,
   },
   reducers: {
-    setSpoiler: (state, action) => {
-      state.spoiler = action.payload;
+    toggleSpoiler: (state) => {
+      state.spoiler = !state.spoiler;
     },
   },
 });
 
-export const { setSpoiler } = spoilersSlice.actions;
+export const { toggleSpoiler } = spoilersSlice.actions;
 export const selectSpoiler = (state) => state.spoilers.spoiler;
 export default spoilersSlice.reducer;
