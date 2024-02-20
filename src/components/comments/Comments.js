@@ -5,7 +5,7 @@ import { timeSince } from "../body/Body";
 
 import './comment.css'
 
-const Comments = ({ postId, subredditName, title, num_comments }) => {
+const Comments = ({ postId, subredditName, title, num_comments, isLoading }) => {
 
     const [ comments, setComments ] = useState([]);
     const [ showComments, setShowComments ] = useState(false);

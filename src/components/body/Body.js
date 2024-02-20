@@ -44,12 +44,16 @@ const Body = ({ searchResults, isLoading }) => {
         <div className="search_results">
             {/* results like it will be on Reddit - replace it on 47 = {searchResults.map((result) => { */}
             {sortedResults.map((result, index) => {
-                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, spoiler } = result.data;
+                const { id, title, url, thumbnail, selftext_html, media, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, spoiler, over_18} = result.data;
 
                 console.log(result.data) //shows all json data from search
+                const youTransform = media && media.oembed && media.oembed.html;
+
                 // Check if media exists and if it's a video
                 const isVideo = media && media.reddit_video;
                 const isGifv = url.endsWith(".gifv");
+                // isImge to controls what to render in a post
+                const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".gif") || url.endsWith(".gifv");
 
                 // попытка получить картинку для сторонних сайтов - данные с media_metadata и отображение на 138 строке
                 // let dynamicUrl = null;
@@ -57,10 +61,6 @@ const Body = ({ searchResults, isLoading }) => {
                 //     const dynamicKey = Object.keys(media_metadata)[0]; // Assuming there is only one key
                 //     dynamicUrl = media_metadata[dynamicKey].s.u;
                 // }
-
-                // isImge to controls what to render in a post
-                const isImage = url.endsWith(".png") || url.endsWith(".jpg") || url.endsWith(".jpeg") || url.endsWith(".gif") || url.endsWith(".gifv");
-               
 
                 // redditDate - epoch data from json. daysCreated - convert to human readable date - these 2 func is a whole date info of a post date
                 // const redditDate = new Date(created *1000);
@@ -98,7 +98,7 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <h2>{title}</h2>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
-                                        <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} />
+                                        <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} youTransform={youTransform} over_18={over_18} />
                                         <br></br>
                                         <div className="comment_block">
                                             <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments} />
