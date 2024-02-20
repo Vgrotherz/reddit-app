@@ -39,7 +39,7 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
                             Your browser does not support the video tag.
                         </video>    
                     ) 
-                    : spoiler === true ? (
+                    : isSpoiler ? (
                             <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
                     ) 
                     : thumbnail && isVideo? (
