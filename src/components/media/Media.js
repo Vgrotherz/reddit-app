@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleSpoiler, selectSpoiler } from "../../features/spoilers/spoilerSlice"; 
 
 import './media.css'
 
-const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler }) => {
-    console.log('Media component - spoiler prop:', spoiler);
+const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftext_html, searchResults, sortedResults, result, index }) => {
+    // console.log('Media component - spoiler prop:', spoiler);
 
     const [results, setResults] = useState(searchResults);
-    const [ isSpoiler, setIsSpoiler ] = useState(spoiler);
+    // const [ isSpoiler, setIsSpoiler ] = useState(spoiler);
+
+    const spoiler = useSelector(selectSpoiler);
+    const dispatch = useDispatch();
 
     const decodeHtml= (html) => {
         let txt = document.createElement("textarea");
@@ -25,8 +30,8 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
     const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
     const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
     
-    const handleSpoilerCheck = () => {
-       setIsSpoiler(!isSpoiler);
+    const handleSpoilerClick = () => {
+       dispatch(toggleSpoiler());
     }
 
 
@@ -40,7 +45,9 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
                         </video>    
                     ) 
                     : spoiler === true ? (
-                            <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
+                        <button className="spoiler" onClick={handleSpoilerClick}>
+                            {spoiler ? "Spoiler" : "Non-Spoiler"}
+                        </button>
                     ) 
                     : thumbnail && isVideo? (
                         <video className="width_50" controls autoPlay loop>
