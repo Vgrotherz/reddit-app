@@ -39,9 +39,9 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
                             Your browser does not support the video tag.
                         </video>    
                     ) 
-                    // : spoiler? (
-                    //         // <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
-                    // ) 
+                    : spoiler === true ? (
+                            <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
+                    ) 
                     : thumbnail && isVideo? (
                         <video className="width_50" controls autoPlay loop>
                             <source src={media.reddit_video.fallback_url} type="video/mp4"></source>

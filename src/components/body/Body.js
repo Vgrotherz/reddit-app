@@ -105,9 +105,9 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         {/* <img>{likes}</img> */}
                                         {/* this is a link to a reddit for testing*/}
-                                        {/* <a href={url} target="_blank" rel="noopener noreferrer">
+                                        <a href={url} target="_blank" rel="noopener noreferrer">
                                             {url}
-                                        </a> */}
+                                        </a>
                                     </div>
                                 </>
                             )}

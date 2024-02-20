@@ -1,7 +1,11 @@
 .comment {
     margin: 1rem;
     margin-bottom: 1rem;
+    box-shadow: 4px 6px 16px 2px rgb(78 117 187 / 58%);
+    padding: 0.5rem 1.2rem;
+    border-radius: 23px;
 }
+
 
 
 .comment_block {
@@ -12,4 +16,14 @@
 
 #comments_num {
     opacity: 1;
+}
+
+.comment_value_block {
+    display: flex;
+    align-items: center;
+}
+
+.comment_value_block span {
+    margin: 0 0.2rem;
+    font-weight: 700;
 }
