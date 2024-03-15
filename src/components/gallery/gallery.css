@@ -1,0 +1,23 @@
+.gallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  /* background: #000000a1; */
+}
+
+.special_gallery {
+  width: 70%;
+  /* height: 31rem; */
+  display: flex;
+  justify-content: center;
+  background: #00000094;
+}
+
+.gallery-navigation {
+  display: flex;
+  width: 130%;
+  background: #f0f8ff7a;
+  /* position: absolute; */
+  justify-content: space-between;
+}

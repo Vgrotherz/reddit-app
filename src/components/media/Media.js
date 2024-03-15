@@ -1,19 +1,22 @@
 import React, { useState } from "react";
+import Gallery from "../gallery/Gallery";
 
 import './media.css'
 
-const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18 }) => {
-    // console.log('Media component - spoiler prop:', spoiler);
+export const decodeHtml= (html) => {
+    let txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 
-    const [results, setResults] = useState(searchResults);
+const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18, is_gallery }) => {
+    
+
+    const [ results, setResults] = useState(searchResults);
     const [ isSpoiler, setIsSpoiler ] = useState(spoiler);
     const [ over18, setOver18 ] = useState(over_18);
 
-    const decodeHtml= (html) => {
-        let txt = document.createElement("textarea");
-        txt.innerHTML = html;
-        return txt.value;
-    }
+   
 
     // funciton for handle showmore button 
     const handleShowText = (index) => {
@@ -41,7 +44,7 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
 
     return(
         <>
-            <div className="media_choose">
+            <div className={ !is_gallery? "media_choose" : "media_choose special_gallery" }>
                     {   over18 ? (
                         <button className="spoiler" onClick={handleOver18Check}>
                             Mature Content
@@ -59,19 +62,21 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, isImage, title, selftex
                             <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
                     ) 
                     : thumbnail && isVideo? (
-                        <video className="width_50" controls autoPlay loop>
+                        <video className="width_70" controls autoPlay loop>
                             <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
                         </video>
                     ) 
                     : youTransform? (
-                        <div>
+                        <div className="youTube">
                             <div dangerouslySetInnerHTML={{ __html: youTubeFrame }} />
                         </div>
-                    ) 
+                    ) : is_gallery? (
+                        <Gallery media_metadata={media_metadata} results={results}/>
+                    )
                     : isImage? (
                         <img className="width_50" src={url} alt={title} />                                    
                     ) : thumbnail && thumbnail === 'self' || thumbnail === 'spoiler' ? (
-                        <div className="post_text">
+                        <div className="post_text" >
                             <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
                             {decodeHtml(selftext_html).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import fetchRedditComments from "../redditApi/RedditComments";
 
 import { timeSince } from "../body/Body";
+import { decodeHtml } from "../media/Media"; 
 
 import './comment.css'
 
-const Comments = ({ postId, subredditName, title, num_comments, isLoading }) => {
+const Comments = ({ postId, subredditName, title, num_comments }) => {
 
     const [ comments, setComments ] = useState([]);
     const [ showComments, setShowComments ] = useState(false);
@@ -32,18 +33,6 @@ const Comments = ({ postId, subredditName, title, num_comments, isLoading }) => 
     
     const handleCommentsClick = () => setShowComments(!showComments);
 
-    // const daysCreatedComm = timeSince(new Date(comments.days * 1000));
-    
-    // const handleNumComm = () => {
-    //     if(num_comments > 0 ) {
-    //         return (
-    
-    //         )
-    //     }
-    // }
-    
-    // const sortedComments = comments.sort((a, b) => b.data.created - a.data.created);
-
     return(
         <div className="width100">
             <button className="icon_action_btn" onClick={handleCommentsClick}>
@@ -62,15 +51,23 @@ const Comments = ({ postId, subredditName, title, num_comments, isLoading }) => 
                 <ul>
                     {comments.map((comment, index) => { 
                         const daysCreatedComm = timeSince(new Date(comment.days * 1000));
+                        const isImageUrl = /\.(jpeg|jpg|gif|png)$/i.test(comment.body);
+                        const commentBody = comment.body;
+                        const imageComment = decodeHtml(commentBody)
 
                         return (
                             <li key={index} className="comment">
                                 <div className="comment_block">
                                     <h4>{comment.author}</h4><span>•</span><>{daysCreatedComm}</>
-                                    {/* <p>Score : {comment.score}</p> */}
-                                    {/* <strong>{comment.author}</strong>: {comment.body} (Score: {comment.score}) */}
                                 </div>
-                                <p>{comment.body}</p>
+                                {isImageUrl ? (
+                                    <img src={comment.body} alt="Comment pic" />
+                                ) : (
+                                    <div>
+                                        <div dangerouslySetInnerHTML={{ __html: imageComment }} />
+                                    </div>
+                                )}
+                                
                                 <div className="comment_value_block">
                                     <svg rpl="" fill="currentColor" height="16" icon-name="upvote-outline" viewBox="0 0 20 20" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M12.877 19H7.123A1.125 1.125 0 0 1 6 17.877V11H2.126a1.114 1.114 0 0 1-1.007-.7 1.249 1.249 0 0 1 .171-1.343L9.166.368a1.128 1.128 0 0 1 1.668.004l7.872 8.581a1.25 1.25 0 0 1 .176 1.348 1.113 1.113 0 0 1-1.005.7H14v6.877A1.125 1.125 0 0 1 12.877 19ZM7.25 17.75h5.5v-8h4.934L10 1.31 2.258 9.75H7.25v8ZM2.227 9.784l-.012.016c.01-.006.014-.01.012-.016Z"></path></svg>
                                     <span className="">{comment.score}</span>

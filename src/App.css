@@ -1,6 +1,3 @@
-a {
-    /* display: none; */
-}
 
 .main {
     width: 100%;
@@ -20,12 +17,20 @@ a {
     width: 100%;
 }
 
+.width_70 {
+    width: 70%;
+}
+
 .width_60 {
     width: 60%;
 }
 
 .width_50 {
     width: 50%;
+}
+
+.width_40 {
+    width: 40%;
 }
 
 .flex {
