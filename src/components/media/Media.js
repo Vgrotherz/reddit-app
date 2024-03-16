@@ -46,11 +46,15 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
         <>
             <div className={ !is_gallery? "media_choose" : "media_choose special_gallery" }>
                     {   over18 ? (
-                        <button className="spoiler" onClick={handleOver18Check}>
-                            Mature Content
-                            This page may contain sensitive or adult content that is not for everyone.                  
-                            By continuing, you agreed that you're under 18 and also agree that use of this site constitutes.
-                        </button>                          
+                        <div className="spoiler-div" onClick={handleOver18Check}>
+                            <button className="spoiler">
+                                <p>
+                                    Mature Content
+                                    This page may contain sensitive or adult content that is not for everyone.                  
+                                    By continuing, you agreed that you're under 18 and also agree that use of this site constitutes.
+                                </p>
+                            </button>
+                        </div>                          
                     ) : 
                     isGifv?  ( 
                         <video className="width60" autoPlay loop>
@@ -59,7 +63,9 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         </video>    
                     ) 
                     : isSpoiler ? (
-                            <button className="spoiler" onClick={handleSpoilerCheck}>Spoiler</button>
+                        <div className='spoiler_div' onClick={handleSpoilerCheck}>
+                            <button className="spoiler">Spoiler</button>
+                        </div>
                     ) 
                     : thumbnail && isVideo? (
                         <video className="width_70" controls autoPlay loop>

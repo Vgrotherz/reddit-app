@@ -17,6 +17,10 @@
 
 .spoiler {
     cursor: pointer;
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 9px;
 }
 
 .media_choose {
