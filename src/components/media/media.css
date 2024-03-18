@@ -32,4 +32,40 @@
   line-height: 1.5;
 }
 
+.md a {
+  color: blue;
+}
+
+.post_text svg, .thumbnail svg {
+  width: 20px;
+}
+
+.post_text span {
+  transform: rotate(180deg);
+}
+
+.post_text button, .thumbnail button {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  color: blue;
+  padding: 4px;
+  padding: 4px 15px;
+  border-radius: 9px;
+  transition: all 300ms ease;
+}
+
+.post_text button:hover, .thumbnail button:hover {
+  background: #51d3e175;
+
+}
+
+.thumbnail button {
+  margin-top: 1rem;
+}
+
+.thumbnail img {
+  width: 30%
+}
 /* slider styles */

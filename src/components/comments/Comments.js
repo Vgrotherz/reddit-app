@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import fetchRedditComments from "../redditApi/RedditComments";
 
+import { renderImagesOnly } from "../media/Media";
 import { timeSince } from "../body/Body";
 import { decodeHtml } from "../media/Media"; 
 
 import './comment.css'
 
-const Comments = ({ postId, subredditName, title, num_comments }) => {
+const Comments = ({ postId, subredditName, title, num_comments, setIsLoading }) => {
 
     const [ comments, setComments ] = useState([]);
     const [ showComments, setShowComments ] = useState(false);
+    // const [ loadComments, setLoadComments ] = useState(false);
 
 
     useEffect(() => {
     
         const fetchComments = async () => {
             try {
+                // setLoadComments(true);
                 const commentsData = await fetchRedditComments(postId, subredditName, title);
                 commentsData.sort((a, b) => b.days - a.days);
                 setComments(commentsData);
+                // setLoadComments(false);
                 console.log('comments.js ', commentsData)
                 
             } catch (error) {
@@ -49,6 +53,7 @@ const Comments = ({ postId, subredditName, title, num_comments }) => {
             </button>
             {showComments && (
                 <ul>
+                    
                     {comments.map((comment, index) => { 
                         const daysCreatedComm = timeSince(new Date(comment.days * 1000));
                         const isImageUrl = /\.(jpeg|jpg|gif|png)$/i.test(comment.body);
@@ -58,12 +63,12 @@ const Comments = ({ postId, subredditName, title, num_comments }) => {
                         return (
                             <li key={index} className="comment">
                                 <div className="comment_block">
-                                    <h4>{comment.author}</h4><span>•</span><>{daysCreatedComm}</>
+                                    <p className="comment_name">{comment.author}</p><span>•</span><>{daysCreatedComm}</>
                                 </div>
                                 {isImageUrl ? (
-                                    <img src={comment.body} alt="Comment pic" />
+                                    <img src={renderImagesOnly(imageComment)} alt="Comment pic" />
                                 ) : (
-                                    <div>
+                                    <div className="comment_text">
                                         <div dangerouslySetInnerHTML={{ __html: imageComment }} />
                                     </div>
                                 )}

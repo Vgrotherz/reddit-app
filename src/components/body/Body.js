@@ -32,7 +32,7 @@ export const timeSince = (date) => {
     return Math.floor(seconds) + " seconds ago";
 }
 
-const Body = ({ searchResults, isLoading }) => {
+const Body = ({ searchResults, isLoading, setIsLoading }) => {
 
     // converts seconds to different more readable date
     
@@ -98,12 +98,25 @@ const Body = ({ searchResults, isLoading }) => {
                                         </div>
                                         <h2>{title}</h2>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
-                                        <div className="med">
-                                            <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} youTransform={youTransform} over_18={over_18} is_gallery={is_gallery} media_metadata={media_metadata}/>
-                                            <br></br>
-                                        </div>
+                                        { isLoading? 
+                                            ( <div className="loading">
+                                                {/* loading screen */}
+                                                <div class="lds-ellipsis">
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                    <div></div>
+                                                </div>
+                                            </div> ) 
+                                            : ( 
+                                                <div className="med">
+                                                    <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} youTransform={youTransform} over_18={over_18} is_gallery={is_gallery} media_metadata={media_metadata} setIsLoading={setIsLoading} />
+                                                    <br></br>
+                                                </div>)
+                                        }
+                                        
                                         <div className="comment_block">
-                                            <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments} />
+                                            <Comments postId={id} subredditName={subreddit_name_prefixed} title={title} num_comments={num_comments} isLoading={isLoading} setIsLoading={setIsLoading}/>
                                         </div>
                                         {/* <img>{likes}</img> */}
                                         {/* this is a link to a reddit for testing*/}

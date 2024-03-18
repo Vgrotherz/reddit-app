@@ -28,8 +28,12 @@ const Gallery = ({ media_metadata }) => {
                     ))}
                 </div>
                 <div className="gallery-navigation">
-                    <button onClick={goToPrevImage} disabled={isFirstImage}>Previous</button>
-                    <button onClick={goToNextImage} disabled={isLastImage}>Next</button>
+                    <button onClick={goToPrevImage} disabled={isFirstImage} class="button-30">
+                        <svg className="left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg>
+                    </button>
+                    <button onClick={goToNextImage} disabled={isLastImage} class="button-30">
+                        <svg className='right' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg>
+                    </button>
                 </div>
             </div>
             {/* <div className="gallery-navigation">

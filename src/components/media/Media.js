@@ -9,13 +9,43 @@ export const decodeHtml= (html) => {
     return txt.value;
 }
 
-const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18, is_gallery }) => {
-    
+export const renderImagesOnly = (text) => {
+    const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
+    const parts = text.match(imageRegex) || [];
 
+    return parts.map((part, index) => {
+        const imageUrl = part.replace(/<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1.*?<\/a>/, '$2'); // Extract the image URL from the <a> tag
+        return <img key={index} src={imageUrl} alt="Reddit Img" />;
+    });
+};
+
+const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18, is_gallery, setIsLoading }) => {
+    
     const [ results, setResults] = useState(searchResults);
     const [ isSpoiler, setIsSpoiler ] = useState(spoiler);
     const [ over18, setOver18 ] = useState(over_18);
 
+    const renderImagesText = (text) => {
+        const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
+        const parts = text.split(imageRegex);
+
+        const elements = [];
+        parts.forEach((part, index) => {
+            if (part.startsWith('https')) {
+                elements.push(
+                    <div key={index}>
+                        <img src={part} alt="Reddit Img" />
+                    </div>
+                );
+            } else if (part.trim() !== '') {
+                elements.push(
+                    <div key={index} dangerouslySetInnerHTML={{ __html: part }}></div>
+                );
+            }
+        });
+
+        return elements;
+    };
    
 
     // funciton for handle showmore button 
@@ -26,14 +56,16 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
     }
 
     // logic for show more button
-    // const youTransform = decodeHtml(media_embed.content);
+
     const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
     const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
     
     const youTubeFrame = decodeHtml(youTransform);
 
     const handleSpoilerCheck = () => {
-       setIsSpoiler(!isSpoiler);
+        setIsLoading(true);
+        setIsSpoiler(!isSpoiler);
+        setIsLoading(false)
     }
 
     const handleOver18Check = () => {
@@ -80,25 +112,41 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         <Gallery media_metadata={media_metadata} results={results}/>
                     )
                     : isImage? (
-                        <img className="width_50" src={url} alt={title} />                                    
+                        <>
+                            {selftext_html? (<div dangerouslySetInnerHTML={{ __html: displayText }}></div>) : null}
+                            <img className="width_50" src={url} alt={title} />  
+                        </>                                  
                     ) : thumbnail && thumbnail === 'self' || thumbnail === 'spoiler' ? (
                         <div className="post_text" >
                             <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
                             {decodeHtml(selftext_html).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>
-                                    {result.showFullText ? 'Show less' : 'Show more'}
+                                    {result.showFullText ? 'Show less' : 'Read more'}
+                                    {!result.showFullText ? 
+                                        (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg>) 
+                                        : 
+                                        (<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg></span>)
+                                    }
+                                    
                                 </button>
                             )}
                         </div>      
                     ) : thumbnail? (
-                        <div>
-                            <img src={thumbnail} alt={title}></img>
+                        <div className="thumbnail">
                             {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
                             : null} */}
-                            <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                            {/* {renderImagesOnly(decodeHtml(displayText))} */}
+                            {renderImagesText(decodeHtml(displayText))}
+                            {/* <div dangerouslySetInnerHTML={{ __html: renderImagesText(decodeHtml(selftext_html)) }}></div> */}
+                            
                             {decodeHtml(selftext_html).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>
-                                    {result.showFullText ? 'Show less' : 'Show more'}
+                                    {result.showFullText ? 'Show less' : 'Read more'}
+                                    {!result.showFullText ? 
+                                        (<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg>) 
+                                        : 
+                                        (<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M10 13.125a.624.624 0 0 1-.442-.183l-5-5 .884-.884L10 11.616l4.558-4.558.884.884-5 5a.624.624 0 0 1-.442.183Z"></path></svg></span>)
+                                    }
                                 </button>
                             )}
                         </div>

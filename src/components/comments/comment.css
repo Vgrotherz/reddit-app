@@ -12,6 +12,15 @@
     display: flex;
     line-height: 20px;
     font-size: small;
+    align-items: center;
+}
+
+.comment_name {
+    font-weight: 700;
+}
+
+.comment_text {
+    margin-bottom: 10px;
 }
 
 #comments_num {

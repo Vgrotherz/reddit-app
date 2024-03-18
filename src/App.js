@@ -49,7 +49,7 @@ const App = () => {
         <div className='main block'>
         { searchResults.length > 0? 
           (
-            <Body searchResults={searchResults} isLoading={isLoading}/>
+            <Body searchResults={searchResults} isLoading={isLoading} setIsLoading={setIsLoading}/>
           ) : (
             <div>
               <h1>Type anything</h1>
