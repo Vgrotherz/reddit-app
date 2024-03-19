@@ -1,6 +1,7 @@
 import React from "react";
 import './body.css';
 
+import { decodeHtml } from "../media/Media";
 import ScoreBlock from "../scoreBlock/ScoreBlock";
 import Comments from "../comments/Comments";
 import Media from "../media/Media";
@@ -96,7 +97,7 @@ const Body = ({ searchResults, isLoading, setIsLoading }) => {
                                             </div> 
                                             <p id="author">{author}</p>
                                         </div>
-                                        <h2>{title}</h2>
+                                        <h1>{decodeHtml(title)}</h1>
                                         { link_flair_text && <p id="link_flair_text">{link_flair_text}</p> }
                                         { isLoading? 
                                             ( <div className="loading">

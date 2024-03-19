@@ -5,8 +5,8 @@
 
 .main h1 {
     display: flex;
-    justify-content: center;
-    margin: 6rem 2rem 2rem 2rem;
+    justify-content: flex-start;
+    /* margin: 6rem 2rem 2rem 2rem; */
 }
 
 .width_100 {

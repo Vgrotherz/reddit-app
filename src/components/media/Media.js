@@ -9,6 +9,28 @@ export const decodeHtml= (html) => {
     return txt.value;
 }
 
+const renderImagesText = (text) => {
+    const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
+    const parts = text.split(imageRegex);
+
+    const elements = [];
+    parts.forEach((part, index) => {
+        if (part.startsWith('https')) {
+            elements.push(
+                <div key={index}>
+                    <img src={part} alt="Reddit Img" />
+                </div>
+            );
+        } else if (part.trim() !== '') {
+            elements.push(
+                <div key={index} dangerouslySetInnerHTML={{ __html: part }}></div>
+            );
+        }
+    });
+
+    return elements;
+};
+
 export const renderImagesOnly = (text) => {
     const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
     const parts = text.match(imageRegex) || [];
@@ -25,28 +47,6 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
     const [ isSpoiler, setIsSpoiler ] = useState(spoiler);
     const [ over18, setOver18 ] = useState(over_18);
 
-    const renderImagesText = (text) => {
-        const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
-        const parts = text.split(imageRegex);
-
-        const elements = [];
-        parts.forEach((part, index) => {
-            if (part.startsWith('https')) {
-                elements.push(
-                    <div key={index}>
-                        <img src={part} alt="Reddit Img" />
-                    </div>
-                );
-            } else if (part.trim() !== '') {
-                elements.push(
-                    <div key={index} dangerouslySetInnerHTML={{ __html: part }}></div>
-                );
-            }
-        });
-
-        return elements;
-    };
-   
 
     // funciton for handle showmore button 
     const handleShowText = (index) => {
