@@ -68,4 +68,10 @@
 .thumbnail img {
   width: 30%
 }
-/* slider styles */
+
+
+@media only screen and (max-width:800px) {
+  .thumbnail img {
+    width: 100%;
+  }
+}

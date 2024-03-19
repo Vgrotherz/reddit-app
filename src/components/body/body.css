@@ -157,3 +157,16 @@ a {
   .loading p {
     font-weight: 600;
   }
+
+  @media only screen and (max-width:800px) {
+    .search_results {
+      margin: 7rem 0.9rem 2rem 0.9rem;
+    }
+    
+    .post {
+      margin: 1rem 0;
+      padding: 0.5rem 2rem;
+    }
+
+
+  }
