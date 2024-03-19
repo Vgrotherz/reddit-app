@@ -3,7 +3,6 @@ a {
 }
 
 .search_results {
-  /* width: 80%; */
   margin: 6rem 2rem 2rem 2rem;
 }
 
@@ -29,6 +28,14 @@ a {
 
 .icon_action {
     font-size: 1.5rem;
+}
+
+.icon_action_clicked_up {
+  color: green;
+}
+
+.icon_action_clicked_down {
+  color:red;
 }
 
 .icon_action_btn {
@@ -170,3 +177,20 @@ a {
 
 
   }
+
+@media only screen and (max-width:375px) {
+  .post {
+    display: block;
+  }
+
+  .btn_block {
+    flex-direction: row;
+    justify-content: center;
+    margin: 5px;
+  }
+  
+  .icon_action {
+    font-size: 2rem;
+  }
+
+}
