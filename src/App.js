@@ -5,7 +5,6 @@ import Body from './components/body/Body';
 // import WeatherComponent from './components/weatherApi/WeatherComponent';
 import ButtonsAside from './components/buttonsAside/ButtonsAside';
 
-// import Comments from './components/comments/Comments';
 
 import './reset.css';
 import './App.css';
@@ -23,19 +22,6 @@ const App = () => {
     setIsLoading(false); // Set loading to false after fetching
     
     }
-  
-
-  // ex of old way to handle search functions
-  // const handleGamingSearch = async (searchTerm) => {
-  //   const results = await RedditApi(searchTerm);
-  //   setSearchResults(results);
-  // } 
-
-  // const handleNewsSearch = async (searchTerm) => {
-  //   const results = await RedditApi(searchTerm);
-  //   setSearchResults(results);
-  // }
-
 
   useEffect(() => {
     handleSearch(defaultSearch);
@@ -67,9 +53,6 @@ const App = () => {
           onCryptoSearch={() => handleSearch('Crypto')}
           onTelevisionSearch={() => handleSearch('Television')}
           onCelebritySearch={() => handleSearch('Celebrity')}
-          // old way
-          // onGamingSearch={handleGamingSearch}
-          // onSportsSearch={handleSportsSearch}
         />
       </div>
     </div>

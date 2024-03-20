@@ -47,7 +47,7 @@ const Body = ({ searchResults, isLoading, setIsLoading, is_gallery }) => {
             {sortedResults.map((result, index) => {
                 const { id, title, url, thumbnail, selftext_html, media, media_metadata, author, link_flair_text, score, num_comments, created, subreddit_name_prefixed, spoiler, over_18, is_gallery } = result.data;
 
-                console.log(result.data) //shows all json data from search
+                // console.log(result.data) //shows all json data from search
                 const youTransform = media && media.oembed && media.oembed.html;
 
                 // Check if media exists and if it's a video

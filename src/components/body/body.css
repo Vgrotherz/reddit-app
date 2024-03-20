@@ -10,7 +10,7 @@ a {
     display: flex;
     margin: 1rem;
     padding: 1.5rem 2rem;
-    
+    overflow: hidden;
     box-shadow: 4px 6px 16px 2px rgba(0, 0, 0, 0.25);
     border-radius: 19px;
 }
@@ -44,6 +44,20 @@ a {
 
 .score {
     margin: 5px 0;
+}
+
+.score_btn_click {
+  font-size: xxx-large;
+}
+
+.score_down {
+  color: red;
+  transition: all 100ms ease-in-out;
+}
+
+.score_up {
+  color: green;
+  transition: all 100ms ease-in-out;
 }
 
 .post h3 {
@@ -151,6 +165,7 @@ a {
   .loading {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 
   .loading p {

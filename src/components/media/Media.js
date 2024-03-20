@@ -65,7 +65,7 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         </div>
                     ) 
                     : thumbnail && isVideo? (
-                        <video className="width_70" controls autoPlay loop>
+                        <video className="width_50" controls autoPlay loop>
                             <source src={media.reddit_video.fallback_url} type="video/mp4"></source>
                         </video>
                     ) 

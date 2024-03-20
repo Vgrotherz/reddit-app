@@ -9,9 +9,9 @@
 }
 
 .special_gallery {
-  width: 50%;
+  /* width: 50%; */
   overflow: hidden;
-  height: 23rem;
+  height: 35rem;
   display: flex;
   justify-content: center;
   /* background: #00000094; */
@@ -19,7 +19,7 @@
 
 .gallery-navigation {
   display: flex;
-  width: 37%;
+  width: 63%;
   /* background: #f0f8ff7a; */
   position: absolute;
   justify-content: space-between;
@@ -94,4 +94,16 @@
 .button-30:active {
   box-shadow: #D6D6E7 0 3px 7px inset;
   transform: translateY(2px);
+}
+
+@media only screen and (min-width:730px) and (max-width:1000px) {
+  .gallery-navigation {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width:729px) {
+  .gallery-navigation{
+    width: 85%;
+  }
 }

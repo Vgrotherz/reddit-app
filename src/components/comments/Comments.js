@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import fetchRedditComments from "../redditApi/RedditComments";
 
-import { renderImagesText2, isImageUrl } from "../utils/utils";
+import { isImageUrl } from "../utils/utils";
 import { timeSince } from "../body/Body";
 // import { decodeHtml } from "../utils/utils";
 
@@ -26,7 +26,7 @@ const Comments = ({ postId, subredditName, title, num_comments, setIsLoading }) 
                 commentsData.sort((a, b) => b.days - a.days);
                 setComments(commentsData);
                 // setLoadComments(false);
-                console.log('comments.js ', commentsData)
+                // console.log('comments.js ', commentsData)
                 
             } catch (error) {
                 console.error('Error fetching comments:', error);
