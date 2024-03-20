@@ -178,7 +178,7 @@ a {
 
   }
 
-@media only screen and (max-width:375px) {
+@media only screen and (max-width:730px) {
   .post {
     display: block;
   }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { decodeHtml } from "../media/Media";
+import { decodeHtml } from "../utils/utils";
 
 import './gallery.css'
 

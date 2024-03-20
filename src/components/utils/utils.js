@@ -35,3 +35,7 @@ export const renderImagesOnly = (text) => {
         return <img key={index} src={imageUrl} alt="Reddit Img" />;
     });
 };
+
+export const isImageUrl = (url) => {
+    return /\.(jpeg|jpg|gif|png|webp)(\?.*)?$/.test(url);
+};

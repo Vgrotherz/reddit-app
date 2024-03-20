@@ -1,7 +1,7 @@
 import React from "react";
 import './body.css';
 
-import { decodeHtml } from "../media/Media";
+import { decodeHtml } from "../utils/utils";
 import ScoreBlock from "../scoreBlock/ScoreBlock";
 import Comments from "../comments/Comments";
 import Media from "../media/Media";

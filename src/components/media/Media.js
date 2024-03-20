@@ -3,43 +3,7 @@ import Gallery from "../gallery/Gallery";
 
 import './media.css'
 
-export const decodeHtml= (html) => {
-    let txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return txt.value;
-}
-
-const renderImagesText = (text) => {
-    const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
-    const parts = text.split(imageRegex);
-
-    const elements = [];
-    parts.forEach((part, index) => {
-        if (part.startsWith('https')) {
-            elements.push(
-                <div key={index}>
-                    <img src={part} alt="Reddit Img" />
-                </div>
-            );
-        } else if (part.trim() !== '') {
-            elements.push(
-                <div key={index} dangerouslySetInnerHTML={{ __html: part }}></div>
-            );
-        }
-    });
-
-    return elements;
-};
-
-export const renderImagesOnly = (text) => {
-    const imageRegex = /<a\s+(?:[^>]*?\s+)?href=(["'])(https?:\/\/preview\.redd\.it\/[a-zA-Z0-9]+\.(?:png|jpg|jpeg|gif|webp)\?width=\d+&format=pjpg&auto=webp&s=[a-zA-Z0-9]+)\1.*?<\/a>/g;
-    const parts = text.match(imageRegex) || [];
-
-    return parts.map((part, index) => {
-        const imageUrl = part.replace(/<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1.*?<\/a>/, '$2'); // Extract the image URL from the <a> tag
-        return <img key={index} src={imageUrl} alt="Reddit Img" />;
-    });
-};
+import { decodeHtml, renderImagesText } from '../utils/utils';
 
 const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18, is_gallery, setIsLoading }) => {
     
@@ -56,7 +20,6 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
     }
 
     // logic for show more button
-
     const truncatedText = decodeHtml(selftext_html).slice(0, 1400);
     const displayText = result.showFullText ? decodeHtml(selftext_html) : truncatedText;
     
@@ -118,7 +81,7 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         </>                                  
                     ) : thumbnail && thumbnail === 'self' || thumbnail === 'spoiler' ? (
                         <div className="post_text" >
-                            <div dangerouslySetInnerHTML={{ __html: displayText }}></div>
+                            {renderImagesText(decodeHtml(displayText))}
                             {decodeHtml(selftext_html).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>
                                     {result.showFullText ? 'Show less' : 'Read more'}
@@ -133,12 +96,8 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         </div>      
                     ) : thumbnail? (
                         <div className="thumbnail">
-                            {/* {dynamicUrl? (<img className="img" src={dynamicUrl} alt={title} />)
-                            : null} */}
                             {/* {renderImagesOnly(decodeHtml(displayText))} */}
                             {renderImagesText(decodeHtml(displayText))}
-                            {/* <div dangerouslySetInnerHTML={{ __html: renderImagesText(decodeHtml(selftext_html)) }}></div> */}
-                            
                             {decodeHtml(selftext_html).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>
                                     {result.showFullText ? 'Show less' : 'Read more'}
