@@ -30,16 +30,6 @@ a {
     font-size: 1.5rem;
 }
 
-.icon_action_clicked_up {
-  color: green;
-  transition: all 100ms ease-in-out;
-}
-
-.icon_action_clicked_down {
-  color:red;
-  transition: all 100ms ease-in-out;
-}
-
 .icon_action_btn {
     background: none;
     border: none;

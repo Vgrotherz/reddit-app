@@ -37,6 +37,22 @@
     font-weight: 700;
 }
 
+.icon_svg {
+    width: 1.2rem;
+}
+
+.icon_clicked_up {
+    color: green;
+    transition: all 100ms ease-in-out;
+    width: 1.5rem;
+  }
+  
+  .icon_clicked_down {
+    color:red;
+    transition: all 100ms ease-in-out;
+    width: 1.5rem;
+  }
+
 .comment_img {
     width: 20%;
 }

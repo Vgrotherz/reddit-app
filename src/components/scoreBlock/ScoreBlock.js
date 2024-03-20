@@ -9,6 +9,8 @@ const ScoreBlock = ({score}) => {
         return score;  // Returns the original score if less than 1000
     }
 
+    
+
 
     return(
         <div className="btn_block">
