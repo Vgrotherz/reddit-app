@@ -3,7 +3,7 @@ import Gallery from "../gallery/Gallery";
 
 import './media.css'
 
-import { decodeHtml, renderImagesText } from '../utils/utils';
+import { decodeHtml, renderImagesText, renderImagesOnly, renderImagesText2 } from '../utils/utils';
 
 const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImage, title, selftext_html, searchResults, sortedResults, result, index, spoiler, youTransform, over_18, is_gallery, setIsLoading }) => {
     
@@ -35,6 +35,8 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
         setOver18(!over18);
     }
 
+    const decodedHtml = decodeHtml(selftext_html);
+    const renderedText = renderImagesText2(decodedHtml);
 
 
     return(
@@ -76,8 +78,8 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                     )
                     : isImage? (
                         <>
-                            {selftext_html? (<div dangerouslySetInnerHTML={{ __html: displayText }}></div>) : null}
-                            <img className="width_50" src={url} alt={title} />  
+                            {selftext_html && isImage? renderImagesText(decodeHtml(displayText)) : null}
+                            <img className="is_image" src={url} alt={title} />  
                         </>                                  
                     ) : thumbnail && thumbnail === 'self' || thumbnail === 'spoiler' ? (
                         <div className="post_text" >
@@ -96,9 +98,11 @@ const Media = ({ url, isGifv, thumbnail, isVideo, media, media_metadata , isImag
                         </div>      
                     ) : thumbnail? (
                         <div className="thumbnail">
-                            {/* {renderImagesOnly(decodeHtml(displayText))} */}
-                            {renderImagesText(decodeHtml(displayText))}
-                            {decodeHtml(selftext_html).length > 1400 && (
+                            {/* {displayText} */}
+                            {renderedText}
+                            
+                            {/* {renderImagesText(decodeHtml(displayText))} */}
+                            {decodeHtml(renderedText).length > 1400 && (
                                 <button onClick={() => handleShowText(index)}>
                                     {result.showFullText ? 'Show less' : 'Read more'}
                                     {!result.showFullText ? 

@@ -39,3 +39,22 @@ export const renderImagesOnly = (text) => {
 export const isImageUrl = (url) => {
     return /\.(jpeg|jpg|gif|png|webp)(\?.*)?$/.test(url);
 };
+
+
+export const renderImagesText2 = (htmlContent) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlContent, "text/html");
+
+    const elements = doc.querySelectorAll("a");
+    elements.forEach((element) => {
+        const href = element.getAttribute("href");
+        if (href) {
+            const extension = href.split('.').pop();
+            if (extension && extension.match(/\b(jpe?g|gif|png)\b/)) {
+                element.outerHTML = `<img src="${href}" alt="Image" />`;
+            }
+        }
+    });
+
+    return <div dangerouslySetInnerHTML={{ __html: doc.body.innerHTML }} />;
+};

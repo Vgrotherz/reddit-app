@@ -33,7 +33,7 @@ export const timeSince = (date) => {
     return Math.floor(seconds) + " seconds ago";
 }
 
-const Body = ({ searchResults, isLoading, setIsLoading }) => {
+const Body = ({ searchResults, isLoading, setIsLoading, is_gallery }) => {
 
     // converts seconds to different more readable date
     
@@ -110,7 +110,7 @@ const Body = ({ searchResults, isLoading, setIsLoading }) => {
                                                 </div>
                                             </div> ) 
                                             : ( 
-                                                <div className="med">
+                                                <div className={is_gallery? "med cent_flex" : "med" }>
                                                     <Media url={url} isGifv={isGifv} thumbnail={thumbnail} isVideo={isVideo} media={media} isImage={isImage} title={title} selftext_html={selftext_html} searchResults={searchResults} sortedResults={sortedResults} result={result} index={index} spoiler={spoiler} youTransform={youTransform} over_18={over_18} is_gallery={is_gallery} media_metadata={media_metadata} setIsLoading={setIsLoading} />
                                                     <br></br>
                                                 </div>)
